@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Procreate Max Layer Calculator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Pixels
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div class="b-example-divider"></div>
+          <div class="container my-5">
+            <div class="container">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select a device</button>
+                  <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuButton1" style="max-height: 200px;">
+                    <li value="768" class="dropdown-item">iPad 5th Generation</li>
+                    <li value="768" class="dropdown-item">iPad 6th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 7th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 8th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 9th Generation</li>
+                    <li value="2048" class="dropdown-item">iPad 10th Generation</li>
+                    <li value="768" class="dropdown-item">iPad Air 2</li>
+                    <li value="1024" class="dropdown-item">iPad Air 3</li>
+                    <li value="2048" class="dropdown-item">iPad Air 4</li>
+                    <li value="4000" class="dropdown-item">iPad Air 5</li>
+                    <li value="768" class="dropdown-item">iPad Mini 4</li>
+                    <li value="1024" class="dropdown-item">iPad Mini 5</li>
+                    <li value="2048" class="dropdown-item">iPad Mini 6</li>
+                    <li value="768" class="dropdown-item">iPad Pro 9.7-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 10.5-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 11-inch 1st Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 1st Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 2nd Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 4th Gen M2</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 4th Gen M2 1TB/2TB</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 1st Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 2nd Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 4th Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 </li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 1TB/2TB</li>
+                  </ul>
+              </div>
+            </div>
+            <script>
+              // select all li elements
+              const liElements = document.querySelectorAll('li');
+            
+              // add a click event listener to each li element
+              liElements.forEach((li) => {
+                li.addEventListener('click', (event) => {
+                  // retrieve the value of the clicked li element
+                  const selectedValue = event.target.getAttribute('value');
+                  document.getElementById("ram").value = selectedValue;
+                  document.getElementById("deviceName").value = li.textContent;
+                });
+              });
+            </script>
+            <table>
+              <tr>
+                <td colspan="2"><input type="text" id="deviceName" disabled style="width: 300px"></td>
+              </tr>
+              <tr>
+                <td><label for="firstNumber">Height:</label></td>
+                <td><input type="number" id="firstNumber"></td>
+              </tr>
+              <tr>
+                <td><label for="secondNumber">Width:</label></td>
+                <td><input type="number" id="secondNumber"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button onclick="calculate()">Calculate</button></td>
+              </tr>
+              <tr>
+                <td><label for="result">Result:</label></td>
+                <td><input type="number" id="result" disabled><input type="hidden" id="ram" disabled></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        function calculate() {
+
+          var canvasHeight = parseFloat(document.getElementById("firstNumber").value);
+          var canvasWidth = parseFloat(document.getElementById("secondNumber").value);
+          var canvasRAM = parseFloat(document.getElementById("ram").value);
+          var ram = canvasRAM * 1024 * 1024;
+          var dimensions16 = (canvasHeight * canvasWidth * 4) * 4;
+          var dimensions4 = canvasHeight * canvasWidth * 4;
+          var result;
+          result = Math.floor((ram - dimensions16)/dimensions4);
+          if (result < 1) {
+            alert("Too large");
+          } else if((canvasRAM > 3999) && (result > 1000)) {
+            document.getElementById("result").value = 1000;
+          } else if ((canvasRAM < 4000) && (result > 400)) {
+            document.getElementById("result").value = 400;
+          } else {
+            document.getElementById("result").value = result;
+          }
+        }
+      </script>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Inches
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div class="b-example-divider"></div>
+          <div class="container my-5">
+            <div class="container">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select a device</button>
+                  <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuButton1" style="max-height: 200px;">
+                    <li value="768" class="dropdown-item">iPad 5th Generation</li>
+                    <li value="768" class="dropdown-item">iPad 6th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 7th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 8th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 9th Generation</li>
+                    <li value="2048" class="dropdown-item">iPad 10th Generation</li>
+                    <li value="768" class="dropdown-item">iPad Air 2</li>
+                    <li value="1024" class="dropdown-item">iPad Air 3</li>
+                    <li value="2048" class="dropdown-item">iPad Air 4</li>
+                    <li value="4000" class="dropdown-item">iPad Air 5</li>
+                    <li value="768" class="dropdown-item">iPad Mini 4</li>
+                    <li value="1024" class="dropdown-item">iPad Mini 5</li>
+                    <li value="2048" class="dropdown-item">iPad Mini 6</li>
+                    <li value="768" class="dropdown-item">iPad Pro 9.7-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 10.5-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 11-inch 1st Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 1st Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 2nd Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 4th Gen M2</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 4th Gen M2 1TB/2TB</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 1st Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 2nd Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 4th Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 </li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 1TB/2TB</li>
+                  </ul>
+              </div>
+            </div>
+            <script>
+              // select all li elements
+              const liElementsInch = document.querySelectorAll('li');
+            
+              // add a click event listener to each li element
+              liElementsInch.forEach((li) => {
+                li.addEventListener('click', (event) => {
+                  // retrieve the value of the clicked li element
+                  const selectedValue = event.target.getAttribute('value');
+                  document.getElementById("ramInch").value = selectedValue;
+                  document.getElementById("deviceNameInch").value = li.textContent;
+                });
+              });
+            </script>
+            <table>
+              <tr>
+                <td colspan="2"><input type="text" id="deviceNameInch" disabled style="width: 300px"></td>
+              </tr>
+              <tr>
+                <td><label for="firstNumberInch">Height:</label></td>
+                <td><input type="number" id="firstNumberInch"></td>
+              </tr>
+              <tr>
+                <td><label for="secondNumberInch">Width:</label></td>
+                <td><input type="number" id="secondNumberInch"></td>
+              </tr>
+              <tr>
+                <td><label for="dpiInch">DPI:</label></td>
+                <td><input type="number" id="dpiInch"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button onclick="calculateInch()">Calculate</button></td>
+              </tr>
+              <tr>
+                <td><label for="result">Result:</label></td>
+                <td><input type="number" id="resultInch" disabled><input type="hidden" id="ramInch" disabled></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        function calculateInch() {
+
+          var canvasHeight = parseFloat(document.getElementById("firstNumberInch").value);
+          var canvasWidth = parseFloat(document.getElementById("secondNumberInch").value);
+          var canvasRAM = parseFloat(document.getElementById("ramInch").value);
+          var dpi = parseFloat(document.getElementById("dpiInch").value);
+          var ram = canvasRAM * 1024 * 1024;
+          var dimensions16 = (canvasHeight * canvasWidth * 4) * 4 * Math.pow(dpi,2);
+          var dimensions4 = canvasHeight * canvasWidth * 4 * Math.pow(dpi,2);
+          var result;
+          result = Math.floor((ram - dimensions16)/dimensions4);
+          if (result < 1) {
+            alert("Too large");
+          } else if((canvasRAM > 3999) && (result > 1000)){
+            document.getElementById("resultInch").value = 1000;
+          } else if ((canvasRAM < 4000) && (result > 400)) {
+            document.getElementById("resultInch").value = 400;
+          } else {
+            document.getElementById("resultInch").value = result;
+          }
+        }
+      </script>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Centimetres
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div class="b-example-divider"></div>
+          <div class="container my-5">
+            <div class="container">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select a device</button>
+                  <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuButton1" style="max-height: 200px;">
+                    <li value="768" class="dropdown-item">iPad 5th Generation</li>
+                    <li value="768" class="dropdown-item">iPad 6th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 7th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 8th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 9th Generation</li>
+                    <li value="2048" class="dropdown-item">iPad 10th Generation</li>
+                    <li value="768" class="dropdown-item">iPad Air 2</li>
+                    <li value="1024" class="dropdown-item">iPad Air 3</li>
+                    <li value="2048" class="dropdown-item">iPad Air 4</li>
+                    <li value="4000" class="dropdown-item">iPad Air 5</li>
+                    <li value="768" class="dropdown-item">iPad Mini 4</li>
+                    <li value="1024" class="dropdown-item">iPad Mini 5</li>
+                    <li value="2048" class="dropdown-item">iPad Mini 6</li>
+                    <li value="768" class="dropdown-item">iPad Pro 9.7-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 10.5-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 11-inch 1st Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 1st Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 2nd Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 4th Gen M2</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 4th Gen M2 1TB/2TB</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 1st Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 2nd Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 4th Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 </li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 1TB/2TB</li>
+                  </ul>
+              </div>
+            </div>
+            <script>
+              // select all li elements
+              const liElementsCM = document.querySelectorAll('li');
+            
+              // add a click event listener to each li element
+              liElementsCM.forEach((li) => {
+                li.addEventListener('click', (event) => {
+                  // retrieve the value of the clicked li element
+                  const selectedValue = event.target.getAttribute('value');
+                  document.getElementById("ramCM").value = selectedValue;
+                  document.getElementById("deviceNameCM").value = li.textContent;
+                });
+              });
+            </script>
+            <table>
+              <tr>
+                <td colspan="2"><input type="text" id="deviceNameCM" disabled style="width: 300px"></td>
+              </tr>
+              <tr>
+                <td><label for="firstNumberCM">Height:</label></td>
+                <td><input type="number" id="firstNumberCM"></td>
+              </tr>
+              <tr>
+                <td><label for="secondNumberCM">Width:</label></td>
+                <td><input type="number" id="secondNumberCM"></td>
+              </tr>
+              <tr>
+                <td><label for="dpiCM">DPI:</label></td>
+                <td><input type="number" id="dpiCM"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button onclick="calculateCM()">Calculate</button></td>
+              </tr>
+              <tr>
+                <td><label for="result">Result:</label></td>
+                <td><input type="number" id="resultCM" disabled><input type="hidden" id="ramCM" disabled></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        function calculateCM() {
+
+          var canvasHeight = parseFloat(document.getElementById("firstNumberCM").value);
+          var canvasWidth = parseFloat(document.getElementById("secondNumberCM").value);
+          var canvasRAM = parseFloat(document.getElementById("ramCM").value);
+          var dpi = parseFloat(document.getElementById("dpiCM").value);
+          var ram = canvasRAM * 1024 * 1024;
+          var dimensions16 = (canvasHeight * canvasWidth * 4) * 4 * Math.pow(dpi,2) / Math.pow(25.4, 2);
+          var dimensions4 = canvasHeight * canvasWidth * 4 * Math.pow(dpi,2) / Math.pow(25.4, 2);
+          var result;
+          result = Math.floor((ram - dimensions16)/dimensions4);
+          if (result < 1) {
+            alert("Too large");
+          } else if((canvasRAM > 3999) && (result > 1000)){
+            document.getElementById("resultCM").value = 1000;
+          } else if ((canvasRAM < 4000) && (result > 400)) {
+            document.getElementById("resultCM").value = 400;
+          } else {
+            document.getElementById("resultCM").value = result;
+          }
+        }
+      </script>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Millimetres
+        </button>
+      </h2>
+      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div class="b-example-divider"></div>
+          <div class="container my-5">
+            <div class="container">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select a device</button>
+                  <ul class="dropdown-menu overflow-auto" aria-labelledby="dropdownMenuButton1" style="max-height: 200px;">
+                    <li value="768" class="dropdown-item">iPad 5th Generation</li>
+                    <li value="768" class="dropdown-item">iPad 6th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 7th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 8th Generation</li>
+                    <li value="1024" class="dropdown-item">iPad 9th Generation</li>
+                    <li value="2048" class="dropdown-item">iPad 10th Generation</li>
+                    <li value="768" class="dropdown-item">iPad Air 2</li>
+                    <li value="1024" class="dropdown-item">iPad Air 3</li>
+                    <li value="2048" class="dropdown-item">iPad Air 4</li>
+                    <li value="4000" class="dropdown-item">iPad Air 5</li>
+                    <li value="768" class="dropdown-item">iPad Mini 4</li>
+                    <li value="1024" class="dropdown-item">iPad Mini 5</li>
+                    <li value="2048" class="dropdown-item">iPad Mini 6</li>
+                    <li value="768" class="dropdown-item">iPad Pro 9.7-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 10.5-inch</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 11-inch 1st Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 1st Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 11-inch 2nd Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 3rd Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 11-inch 4th Gen M2</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 11-inch 4th Gen M2 1TB/2TB</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 1st Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 2nd Gen</li>
+                    <li value="2048" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 3rd Gen 1TB</li>
+                    <li value="2560" class="dropdown-item">iPad Pro 12.9-inch 4th Gen</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1</li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 5th Gen M1 1TB/2TB</li>
+                    <li value="4000" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 </li>
+                    <li value="7168" class="dropdown-item">iPad Pro 12.9-inch 6th Gen M2 1TB/2TB</li>
+                  </ul>
+              </div>
+            </div>
+            <script>
+              // select all li elements
+              const liElementsMM = document.querySelectorAll('li');
+            
+              // add a click event listener to each li element
+              liElementsMM.forEach((li) => {
+                li.addEventListener('click', (event) => {
+                  // retrieve the value of the clicked li element
+                  const selectedValue = event.target.getAttribute('value');
+                  document.getElementById("ramMM").value = selectedValue;
+                  document.getElementById("deviceNameMM").value = li.textContent;
+                });
+              });
+            </script>
+            <table>
+              <tr>
+                <td colspan="2"><input type="text" id="deviceNameMM" disabled style="width: 300px"></td>
+              </tr>
+              <tr>
+                <td><label for="firstNumberMM">Height:</label></td>
+                <td><input type="number" id="firstNumberMM"></td>
+              </tr>
+              <tr>
+                <td><label for="secondNumberMM">Width:</label></td>
+                <td><input type="number" id="secondNumberMM"></td>
+              </tr>
+              <tr>
+                <td><label for="dpiMM">DPI:</label></td>
+                <td><input type="number" id="dpiMM"></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button onclick="calculateMM()">Calculate</button></td>
+              </tr>
+              <tr>
+                <td><label for="result">Result:</label></td>
+                <td><input type="number" id="resultMM" disabled><input type="hidden" id="ramMM" disabled></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <script>
+        function calculateMM() {
+
+          var canvasHeight = parseFloat(document.getElementById("firstNumberMM").value);
+          var canvasWidth = parseFloat(document.getElementById("secondNumberMM").value);
+          var canvasRAM = parseFloat(document.getElementById("ramMM").value);
+          var dpi = parseFloat(document.getElementById("dpiMM").value);
+          var ram = canvasRAM * 1024 * 1024;
+          var dimensions16 = (canvasHeight * canvasWidth * 4) * 4 * Math.pow(dpi,2) / Math.pow(2.54, 2);
+          var dimensions4 = canvasHeight * canvasWidth * 4 * Math.pow(dpi,2) / Math.pow(2.54, 2);
+          var result;
+          result = Math.floor((ram - dimensions16)/dimensions4);
+          if (result < 1) {
+            alert("Too large");
+          } else if((canvasRAM > 3999) && (result > 1000)){
+            document.getElementById("resultMM").value = 1000;
+          } else if ((canvasRAM < 4000) && (result > 400)) {
+            document.getElementById("resultMM").value = 400;
+          } else {
+            document.getElementById("resultMM").value = result;
+          }
+        }
+      </script>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
