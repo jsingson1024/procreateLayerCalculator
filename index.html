@@ -145,7 +145,7 @@
             }
           }
           result = Math.floor((ram - dimensions16)/dimensions4);
-          if (result < 1) {
+          if (result < 1 || canvasHeight > 16384 || canvasWidth > 16384) {
             $('#myModal').modal('show');
             document.getElementById("result").value = 0;
           } else if((canvasRAM > 3999) && (result > 1000)) {
@@ -279,7 +279,7 @@
             }
           }
           result = Math.floor((ram - dimensions16)/dimensions4);
-          if (result < 1) {
+          if (result < 1 || Math.floor(canvasHeight * dpi) > 16384 || Math.floor(canvasWidth * dpi) > 16384) {
             $('#myModal').modal('show');
             document.getElementById("result").value = 0;
           } else if((canvasRAM > 3999) && (result > 1000)){
@@ -413,7 +413,7 @@
             }
           }
           result = Math.floor((ram - dimensions16)/dimensions4);
-          if (result < 1) {
+          if (result < 1 || Math.floor(canvasHeight * (dpi/2.54) > 16384 || Math.floor(canvasWidth * (dpi/2.54) > 16384) {
             $('#myModal').modal('show');
             document.getElementById("result").value = 0;
           } else if((canvasRAM > 3999) && (result > 1000)){
@@ -547,7 +547,7 @@
             }
           }
           result = Math.floor((ram - dimensions16)/dimensions4);
-          if (result < 1) {
+          if (result < 1 || Math.floor(canvasHeight * dpi/25.4) > 16384 || Math.floor(canvasHeight * dpi/25.4) > 16384) { {
             $('#myModal').modal('show');
             document.getElementById("result").value = 0;
           } else if((canvasRAM > 3999) && (result > 1000)){
